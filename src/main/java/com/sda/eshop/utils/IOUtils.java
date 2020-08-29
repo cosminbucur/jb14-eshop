@@ -1,0 +1,57 @@
+package com.sda.eshop.utils;
+
+import com.sda.eshop.Application;
+import com.sda.eshop.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class IOUtils {
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+
+    public static List<String> readUsers() {
+        List<String> usersList = new ArrayList<>();
+        BufferedReader reader;
+        File users = new File("C:\\Working\\dev\\jb14-eshop\\src\\main\\resources\\users.txt");
+        try {
+            reader = new BufferedReader(new FileReader(users));
+            String nextLine = reader.readLine();
+            while (nextLine != null) {
+                usersList.add(nextLine);
+                nextLine = reader.readLine();
+
+            }
+            reader.close();
+        } catch (Exception FileNotFound) {
+            FileNotFound.printStackTrace();
+        }
+        return usersList;
+    }
+
+    public static List<User> loadUsers() {
+        Path path = Paths.get("C:\\Working\\dev\\jb14-eshop\\src\\main\\resources\\users.txt");
+        List<User> result = new ArrayList<>();
+        try {
+            List<String> names = Files.readAllLines(path);
+            result = names.stream()
+                    .map(name -> new User(name))
+                    .collect(Collectors.toList());
+
+        } catch (IOException e) {
+            logger.error("Failed read from file! {}", path);
+        }
+        return result;
+    }
+
+
+}
