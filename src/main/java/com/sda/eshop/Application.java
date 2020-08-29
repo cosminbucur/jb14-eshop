@@ -37,6 +37,7 @@ public class Application {
             } else if (choice == 0) {
                 printMenu();
             }
+            // todo add a stop feature
 
         }
     }
