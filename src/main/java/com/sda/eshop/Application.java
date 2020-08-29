@@ -7,7 +7,9 @@ import java.util.Scanner;
 
 public class Application {
 
+    // TODO: fix logging
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
+
     public static void main(String[] args) {
 
         logger.info("Application Started");
@@ -37,11 +39,9 @@ public class Application {
             } else if (choice == 0) {
                 printMenu();
             }
-            // todo add a stop feature
-
+            // TODO: add an exit feature
         }
     }
-
 
     private static void printMenu() {
         System.out.println("enter 1 to see product catalogue");

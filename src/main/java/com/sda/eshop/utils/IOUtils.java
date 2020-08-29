@@ -1,6 +1,5 @@
 package com.sda.eshop.utils;
 
-import com.sda.eshop.Application;
 import com.sda.eshop.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class IOUtils {
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(IOUtils.class);
 
     public static List<String> readUsers() {
         List<String> usersList = new ArrayList<>();
@@ -29,7 +29,6 @@ public class IOUtils {
             while (nextLine != null) {
                 usersList.add(nextLine);
                 nextLine = reader.readLine();
-
             }
             reader.close();
         } catch (Exception FileNotFound) {
@@ -38,20 +37,21 @@ public class IOUtils {
         return usersList;
     }
 
+    // TODO: do not hardcode the path here (use it as a parameter for the method)
     public static List<User> loadUsers() {
+
+        // TODO: ADVANCED - read how to load yml files from resources folder
+        // https://stackabuse.com/reading-and-writing-yaml-files-in-java-with-jackson/
         Path path = Paths.get("C:\\Working\\dev\\jb14-eshop\\src\\main\\resources\\users.txt");
         List<User> result = new ArrayList<>();
         try {
             List<String> names = Files.readAllLines(path);
             result = names.stream()
-                    .map(name -> new User(name))
-                    .collect(Collectors.toList());
-
+                .map(name -> new User(name))
+                .collect(Collectors.toList());
         } catch (IOException e) {
             logger.error("Failed read from file! {}", path);
         }
         return result;
     }
-
-
 }
