@@ -34,6 +34,7 @@ public class HibernateUtils {
         props.put(Environment.USER, "root");
         props.put(Environment.PASS, "Alecsutza(1308)");
         props.put(Environment.SHOW_SQL, "false");
+
         configuration.setProperties(props);
 
         configuration.addAnnotatedClass(User.class);
