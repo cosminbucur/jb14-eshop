@@ -1,6 +1,5 @@
 package com.sda.eshop.model;
 
-
 import javax.persistence.*;
 
 @Entity(name = "User")
