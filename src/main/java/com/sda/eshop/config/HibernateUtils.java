@@ -24,7 +24,9 @@ public class HibernateUtils {
     }
 
     private static Configuration createConfig() {
+        // TODO: read properties from a yml file
         Configuration configuration = new Configuration();
+
         Properties props = new Properties();
         props.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
         props.put(Environment.URL, "jdbc:mysql://localhost:3306/eshop?serverTimezone=UTC");
@@ -32,13 +34,15 @@ public class HibernateUtils {
         props.put(Environment.HBM2DDL_AUTO, "create-drop");
         props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         props.put(Environment.USER, "root");
-        props.put(Environment.PASS, "Alecsutza(1308)");
+        props.put(Environment.PASS, "root");
         props.put(Environment.SHOW_SQL, "false");
+
         configuration.setProperties(props);
 
+        // annotated classes
         configuration.addAnnotatedClass(User.class);
+
         return configuration;
     }
-
 
 }

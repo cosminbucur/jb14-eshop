@@ -1,6 +1,11 @@
 package com.sda.eshop.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity(name = "User")
 @Table(name = "users")
@@ -18,12 +23,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    // mandatory for hibernate
     public User() {
     }
 
     public User(String name) {
         this.name = name;
-
     }
 
     public Long getId() {
@@ -58,17 +63,6 @@ public class User {
         this.password = password;
     }
 
-    //todo Hash password
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,5 +83,16 @@ public class User {
         result = 31 * result + getUsername().hashCode();
         result = 31 * result + getPassword().hashCode();
         return result;
+    }
+
+    //TODO: Hash password (replace it with 8 *)
+    @Override
+    public String toString() {
+        return "User{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", username='" + username + '\'' +
+            ", password='" + password + '\'' +
+            '}';
     }
 }

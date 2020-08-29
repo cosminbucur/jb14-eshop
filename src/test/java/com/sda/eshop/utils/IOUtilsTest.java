@@ -8,15 +8,17 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 class IOUtilsTest {
 
     @Test
-    void loadUsers() {
+    void givenATextFile_whenLoadUsers_thenReturnAListOfUsers() {
+        // given
         List<User> expected = Arrays.asList(new User("Radu Chirila"));
+
+        // when
         List<User> actual = IOUtils.loadUsers();
+
+        // then
         assertThat(actual.get(0)).isEqualTo(expected.get(0));
-
-
     }
 }
