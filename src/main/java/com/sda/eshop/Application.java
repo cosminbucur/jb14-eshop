@@ -38,10 +38,16 @@ public class Application {
                 System.out.println("Admin");
             } else if (choice == 0) {
                 printMenu();
+            } else if (choice == 9) {
+                System.out.println("You have chosen to exit! Adios!");
+                break;
             }
-            // TODO: add an exit feature
+
         }
+
+        // added exit feature to printMenu
     }
+
 
     private static void printMenu() {
         System.out.println("enter 1 to see product catalogue");
@@ -49,6 +55,7 @@ public class Application {
         System.out.println("enter 3 to see your account");
         System.out.println("enter 4 to see the admin area");
         System.out.println("enter 0 to select another option");
+        System.out.println("enter 9 to exit menu");
         System.out.println("Now chose an option");
     }
 }
