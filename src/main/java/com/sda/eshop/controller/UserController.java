@@ -16,4 +16,8 @@ public class UserController {
     public List<User> findAll() {
         return userService.findAll();
     }
+
+    public void save(User user) {
+        userService.save(user);
+    }
 }

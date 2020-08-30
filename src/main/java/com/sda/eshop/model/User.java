@@ -31,6 +31,12 @@ public class User {
         this.name = name;
     }
 
+    public User(String name, String username, String password) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+    }
+
     public Long getId() {
         return id;
     }
@@ -92,7 +98,7 @@ public class User {
             "id=" + id +
             ", name='" + name + '\'' +
             ", username='" + username + '\'' +
-            ", password='" + password + '\'' +
+            ", password='" + "*******" + '\'' +
             '}';
     }
 }

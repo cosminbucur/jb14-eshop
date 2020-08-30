@@ -117,4 +117,24 @@ public class UserDao {
     private Session openSession() {
         return HibernateUtils.getSessionFactory().openSession();
     }
+
+    public User findByUsername(String username) {
+        User user = null;
+        try (Session session = openSession()) {
+
+            Query<User> query = session.createQuery("FROM User u WHERE u.username = :username");
+            query.setParameter("username", username);
+            List<User> foundUsers = query.list();
+
+            if (foundUsers.isEmpty()) {
+                return user;
+            } else {
+                user = foundUsers.get(0);
+            }
+
+        } catch (HibernateException e) {
+            logger.error(e.getMessage());
+        }
+        return user;
+    }
 }

@@ -77,6 +77,7 @@ public class Menu {
     private static void showCrudUser() {
         System.out.println(SELECT_AN_OPTION);
         System.out.println("1. Find all");
+        System.out.println("3. Create");
         System.out.println("0. BACK");
 
         int option = in.nextInt();
@@ -84,6 +85,10 @@ public class Menu {
         switch (option) {
             case 1: {
                 showAllUsers();
+                break;
+            }
+            case 3: {
+                showSaveUser();
                 break;
             }
             default: {
@@ -99,6 +104,42 @@ public class Menu {
 
 //        userService.findAll()
 //            .forEach(user -> System.out.println(user));
+    }
+
+    /*
+            3. Create
+            Name
+            Username
+            Password
+            1. SAVE
+            2. RESET
+            0. BACK
+ */
+    private static void showSaveUser() {
+        System.out.println("Insert name");
+        String name = in.next();
+        System.out.println("Insert username");
+        String username = in.next();
+        System.out.println("Insert password");
+        String password = in.next();
+
+        System.out.println("1. SAVE");
+        System.out.println("2. RESET");
+        System.out.println("0. BACK");
+
+        Integer option = in.nextInt();
+
+        if (option.equals(0)) {
+            showCrudUser();
+        } else if (option.equals(1)) {
+            // save
+            User newUser = new User(name, username, password);
+            userController.save(newUser);
+            // back
+            showCrudUser();
+        } else if (option.equals(2)) {
+            showSaveUser();
+        }
     }
 
 }

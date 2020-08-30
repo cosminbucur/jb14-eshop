@@ -34,4 +34,41 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
+    @Override
+    public void save(User user) {
+        log.info("Trying to create a new user");
+
+        // validate
+        if (isValid(user)) {
+            // prevent duplicate username
+            User foundUser = findByUsername(user.getUsername());
+            if (null != foundUser) {
+                log.error("This username already exists. Try again!");
+            } else {
+                userDao.save(user);
+            }
+        }
+    }
+
+    private boolean isValid(User user) {
+        return null != user.getName() &&
+            null != user.getUsername() &&
+            null != user.getPassword();
+    }
+
+    // TODO: findByUsername
+    private User findByUsername(String username) {
+        log.info("Trying to find user by username: {}", username);
+
+        User user = userDao.findByUsername(username);
+
+        if (null == user) {
+            log.info("Failed to find a user with username: {}", username);
+            return null;
+        }
+
+        return user;
+    }
+
+
 }
