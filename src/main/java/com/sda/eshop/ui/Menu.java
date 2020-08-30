@@ -1,8 +1,10 @@
 package com.sda.eshop.ui;
 
 import com.sda.eshop.controller.UserController;
+import com.sda.eshop.dao.UserDao;
 import com.sda.eshop.model.User;
 import com.sda.eshop.service.UserService;
+import com.sda.eshop.service.UserServiceImpl;
 
 import java.util.List;
 import java.util.Scanner;
@@ -10,8 +12,10 @@ import java.util.Scanner;
 public class Menu {
 
     public static final String SELECT_AN_OPTION = "Select an option:";
-    public static final UserService userService = new UserService();
-    public static final UserController userController = new UserController();
+
+    public static final UserDao userDao = new UserDao();
+    public static final UserService userService = new UserServiceImpl(userDao);
+    public static final UserController userController = new UserController(userService);
 
     /*
     TODO: build main menu
@@ -36,6 +40,11 @@ public class Menu {
         int option = in.nextInt();
 
         switch (option) {
+            case 0: {
+                System.out.println("Thanks for buying. Bye!");
+                System.exit(1);
+                break;
+            }
             case 4: {
                 showAdminArea();
                 break;
