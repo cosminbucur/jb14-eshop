@@ -17,14 +17,6 @@ public class Menu {
     public static final UserService userService = new UserServiceImpl(userDao);
     public static final UserController userController = new UserController(userService);
 
-    /*
-    TODO: build main menu
-        4. Admin area
-          1. CRUD user
-            1. Find all - display all users
-              0. Back - to CRUD user
-     */
-
     private static Scanner in = new Scanner(System.in);
 
     public static void showMainMenu() {

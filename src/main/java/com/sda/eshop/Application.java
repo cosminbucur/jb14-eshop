@@ -1,5 +1,6 @@
 package com.sda.eshop;
 
+import com.sda.eshop.config.DataConfig;
 import com.sda.eshop.ui.Menu;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +13,7 @@ public class Application {
 
     public static void main(String[] args) {
         logger.debug("Application Started");
+        DataConfig.setInitialData();
 
         System.out.println("************");
         System.out.println("* Menu *");

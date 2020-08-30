@@ -1,5 +1,7 @@
 package com.sda.eshop.config;
 
+import com.sda.eshop.model.Order;
+import com.sda.eshop.model.Product;
 import com.sda.eshop.model.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -41,6 +43,8 @@ public class HibernateUtils {
 
         // annotated classes
         configuration.addAnnotatedClass(User.class);
+        configuration.addAnnotatedClass(Order.class);
+        configuration.addAnnotatedClass(Product.class);
 
         return configuration;
     }
