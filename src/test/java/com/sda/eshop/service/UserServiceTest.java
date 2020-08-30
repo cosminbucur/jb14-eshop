@@ -14,12 +14,17 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+// example of unit test with mocks
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
+    // the user dao is mocked. instead of accessing the db,
+    // we force it to return a list with one object
     @Mock
     public UserDao userDaoMock;
 
+    // mockito will instantiate the user service by using @InjectMocks
+    // no need to instantiate like UserService service = new UserService();
     @InjectMocks
     private UserService userService;
 
