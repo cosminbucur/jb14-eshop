@@ -7,59 +7,55 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDao {
 
-    // TODO:
-    public void save(User usertoSave) {
+    //we can modify the constructor used to create the new User object later (create another constructor in User.class) and add more parameters to the method
+    public void save(String name) {
         Session session = HibernateUtils.getSessionFactory().openSession();
+        User userToBeAdded = new User(name);
         Transaction transaction = session.beginTransaction();
-        session.save(usertoSave);
+        session.save(userToBeAdded);
         transaction.commit();
         session.close();
     }
 
-    // TODO:
-    public User findById(Integer id) {
+    public User findById(Long id) {
         Session session = HibernateUtils.getSessionFactory().openSession();
-        String query = "from User where id= :id";
-        Query<User> foundUserById = session.createQuery(query);
+        String selectUserById = "from User where id= :id";
+        Query<User> foundUserById = session.createQuery(selectUserById);
         foundUserById.setParameter("id", id);
-        User user = foundUserById.getResultStream().findFirst().orElse(null);
+        User foundUser = foundUserById.getResultStream().findFirst().orElse(null);
         session.close();
-        return user;
+        return foundUser;
     }
 
-    // TODO:
     public List<User> findAll() {
         Session session = HibernateUtils.getSessionFactory().openSession();
-        Query findAllQuery = session.createQuery("FROM User");
-        List<User> usersList = findAllQuery.list();
+        String selectAllUsers = "from User";
+        Query<User> foundUsers = session.createQuery(selectAllUsers);
+        List<User> userList = foundUsers.getResultStream().collect(Collectors.toList());
         session.close();
-        return usersList;
+        return userList;
     }
 
-    // TODO:
-    public void update(long id, String name) {
+    public void update(Long id, String updatedName) {
         Session session = HibernateUtils.getSessionFactory().openSession();
-        User user = new User(name);
+        User userToBeUpdated = findById(id);
         Transaction transaction = session.beginTransaction();
-        session.update(user);
-        transaction.commit();
-        session.close();
-
-
-    }
-
-    // TODO:
-    public void delete(long id) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        User user = new User("invalid");
-        session.delete(user);
+        userToBeUpdated.setName(updatedName);
+        session.update(userToBeUpdated);
         transaction.commit();
         session.close();
     }
 
-
+    public void delete(Long id) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        User userToBeDeleted = findById(id);
+        Transaction transaction = session.beginTransaction();
+        session.delete(userToBeDeleted);
+        transaction.commit();
+        session.close();
+    }
 }
