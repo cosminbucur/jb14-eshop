@@ -12,11 +12,10 @@ import java.util.stream.Collectors;
 public class UserDao {
 
     //we can modify the constructor used to create the new User object later (create another constructor in User.class) and add more parameters to the method
-    public void save(String name) {
+    public void save(User user) {
         Session session = HibernateUtils.getSessionFactory().openSession();
-        User userToBeAdded = new User(name);
         Transaction transaction = session.beginTransaction();
-        session.save(userToBeAdded);
+        session.save(user);
         transaction.commit();
         session.close();
     }
