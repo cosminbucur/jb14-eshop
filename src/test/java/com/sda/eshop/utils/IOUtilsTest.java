@@ -16,7 +16,7 @@ class IOUtilsTest {
         List<User> expected = Arrays.asList(new User("Radu Chirila"));
 
         // when
-        List<User> actual = IOUtils.loadUsers();
+        List<User> actual = IOUtils.loadUsers("");
 
         // then
         assertThat(actual.get(0)).isEqualTo(expected.get(0));
