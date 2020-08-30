@@ -1,18 +1,26 @@
 package com.sda.eshop;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
 public class Application {
 
     // TODO: fix logging
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+    // read about log4j https://www.scalyr.com/blog/maven-log4j2-project/
+    private static final Logger logger = LogManager.getLogger(Application.class);
 
     public static void main(String[] args) {
+        logger.trace("We've just greeted the user!");
+        logger.debug("We've just greeted the user!");
+        logger.info("We've just greeted the user!");
+        logger.warn("We've just greeted the user!");
+        logger.error("We've just greeted the user!");
+        logger.fatal("We've just greeted the user!");
 
-        logger.info("Application Started");
+        logger.debug("Application Started");
+
         Scanner input = new Scanner(System.in);
         int choice;
         String start;
