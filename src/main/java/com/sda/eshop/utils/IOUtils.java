@@ -37,12 +37,22 @@ public class IOUtils {
         return usersList;
     }
 
-    // TODO: do not hardcode the path here (use it as a parameter for the method)
-    public static List<User> loadUsers(String filePath) {
+    // TODO: enhance the method for loading users
+    /*
+    Read from file line by line:
 
+    Given "Radu Chirila, admin"
+
+    For each line create a new user like this:
+
+    name: Radu Chirila
+    username radchi76 (first 3 letters of each word and append a random 2 digit number)
+    password: admin
+
+     */
+    public static List<User> loadUsers(String filePath) {
         // TODO: ADVANCED - read how to load yml files from resources folder
         // https://stackabuse.com/reading-and-writing-yaml-files-in-java-with-jackson/
-        //Path path = Paths.get("C:\\Dev\\jb14-eshop\\src\\main\\resources\\users.txt");
         Path path = Paths.get(filePath);
         List<User> result = new ArrayList<>();
         try {

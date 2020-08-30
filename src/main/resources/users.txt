@@ -1,7 +1,7 @@
-Radu Chirila
-Iosif Ameziane
-Iulian Diaconescu
-Claudiu Zară
-Cosmin Marin
-Andrei Panait
-Marius Delcea
+Radu Chirila, admin
+Iosif Ameziane, admin
+Iulian Diaconescu, admin
+Claudiu Zară, admin
+Cosmin Marin, admin
+Andrei Panait, admin
+Marius Delcea, admin

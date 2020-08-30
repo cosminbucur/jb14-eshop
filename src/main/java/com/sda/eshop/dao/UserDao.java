@@ -43,6 +43,10 @@ public class UserDao {
         }
     }
 
+    public void saveAll(List<User> users) {
+        users.forEach(user -> save(user));
+    }
+
     public User findById(Long id) {
         Session session = openSession();
         String selectUserById = "from User where id= :id";

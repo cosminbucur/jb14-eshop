@@ -1,5 +1,6 @@
 package com.sda.eshop.utils;
 
+import com.sda.eshop.config.DataConfig;
 import com.sda.eshop.model.User;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ class IOUtilsTest {
         List<User> expected = Arrays.asList(new User("Radu Chirila"));
 
         // when
-        List<User> actual = IOUtils.loadUsers("");
+        List<User> actual = IOUtils.loadUsers(DataConfig.USERS_SOURCE);
 
         // then
         assertThat(actual.get(0)).isEqualTo(expected.get(0));
