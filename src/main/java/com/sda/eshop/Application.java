@@ -1,18 +1,26 @@
 package com.sda.eshop;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
 public class Application {
 
     // TODO: fix logging
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+    // read about log4j https://www.scalyr.com/blog/maven-log4j2-project/
+    private static final Logger logger = LogManager.getLogger(Application.class);
 
     public static void main(String[] args) {
+        logger.trace("We've just greeted the user!");
+        logger.debug("We've just greeted the user!");
+        logger.info("We've just greeted the user!");
+        logger.warn("We've just greeted the user!");
+        logger.error("We've just greeted the user!");
+        logger.fatal("We've just greeted the user!");
 
-        logger.info("Application Started");
+        logger.debug("Application Started");
+
         Scanner input = new Scanner(System.in);
         int choice;
         String start;
@@ -38,10 +46,16 @@ public class Application {
                 System.out.println("Admin");
             } else if (choice == 0) {
                 printMenu();
+            } else if (choice == 9) {
+                System.out.println("You have chosen to exit! Adios!");
+                break;
             }
-            // TODO: add an exit feature
+
         }
+
+        // added exit feature to printMenu
     }
+
 
     private static void printMenu() {
         System.out.println("enter 1 to see product catalogue");
@@ -49,6 +63,7 @@ public class Application {
         System.out.println("enter 3 to see your account");
         System.out.println("enter 4 to see the admin area");
         System.out.println("enter 0 to select another option");
+        System.out.println("enter 9 to exit menu");
         System.out.println("Now chose an option");
     }
 }

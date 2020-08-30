@@ -7,79 +7,54 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDao {
 
-    // TODO:
-    public void save(User userToBeSaved) {
+    //we can modify the constructor used to create the new User object later (create another constructor in User.class) and add more parameters to the method
+    public void save(User user) {
         Session session = HibernateUtils.getSessionFactory().openSession();
-        System.out.println("Hibernate session started.");
         Transaction transaction = session.beginTransaction();
-        session.save(userToBeSaved);
+        session.save(user);
         transaction.commit();
         session.close();
-        System.out.println("Hibernate session ended. " + userToBeSaved + " was added to 'users' table.");
-
     }
 
-    // TODO:
-    public User findById(Integer id) {
+    public User findById(Long id) {
         Session session = HibernateUtils.getSessionFactory().openSession();
-        System.out.println("Hibernate session started.");
-        String selectQuery = "from Project where projectId= :id";
-        Query<User> foundUserById = session.createQuery(selectQuery);
+        String selectUserById = "from User where id= :id";
+        Query<User> foundUserById = session.createQuery(selectUserById);
         foundUserById.setParameter("id", id);
         User foundUser = foundUserById.getResultStream().findFirst().orElse(null);
         session.close();
-        System.out.println("Hibernate session ended.");
         return foundUser;
     }
 
-    // TODO:
     public List<User> findAll() {
-
         Session session = HibernateUtils.getSessionFactory().openSession();
-        System.out.println("Hibernate session started.");
-        Query findAllQuery = session.createQuery("FROM User");
-        List<User> userList = findAllQuery.list();
-        System.out.println("Found " + userList.size() + " projects.");
-        //projectList.forEach(System.out::println);
-        userList.forEach(e -> System.out.println(e));
+        String selectAllUsers = "from User";
+        Query<User> foundUsers = session.createQuery(selectAllUsers);
+        List<User> userList = foundUsers.getResultStream().collect(Collectors.toList());
         session.close();
-        System.out.println("Hibernate session ended.");
-
         return userList;
     }
 
-    // TODO:
-    public void update(Integer id, String newUserName) {
-        User user = findById(id);
-        if (user != null) {
-            user.setName(newUserName);
-
-            Session session = HibernateUtils.getSessionFactory().openSession();
-            System.out.println("Hibernate session started.");
-            Transaction transaction = session.beginTransaction();
-            session.update(user);
-
-            transaction.commit();
-            session.close();
-        } else {
-            System.out.println("Project with id= " + id + " not found");
-        }
+    public void update(Long id, String updatedName) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        User userToBeUpdated = findById(id);
+        Transaction transaction = session.beginTransaction();
+        userToBeUpdated.setName(updatedName);
+        session.update(userToBeUpdated);
+        transaction.commit();
+        session.close();
     }
 
-    // TODO:
-    public void delete(User userToBeDeleted) {
-
+    public void delete(Long id) {
         Session session = HibernateUtils.getSessionFactory().openSession();
-        System.out.println("Hibernate session started.");
+        User userToBeDeleted = findById(id);
         Transaction transaction = session.beginTransaction();
         session.delete(userToBeDeleted);
         transaction.commit();
         session.close();
-        System.out.println("Hibernate session ended. " + userToBeDeleted + " was deleted from 'users' table.");
-
     }
-
 }
