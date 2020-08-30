@@ -9,4 +9,6 @@ public interface UserService {
     List<User> findAll();
 
     void save(User user);
+
+    User findByUsername(String username);
 }

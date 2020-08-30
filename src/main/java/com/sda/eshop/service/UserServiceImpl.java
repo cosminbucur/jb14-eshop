@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
             null != user.getPassword();
     }
 
-    private User findByUsername(String username) {
+    public User findByUsername(String username) {
         log.info(USER_FIND_BY_USERNAME, username);
 
         User user = userDao.findByUsername(username);
