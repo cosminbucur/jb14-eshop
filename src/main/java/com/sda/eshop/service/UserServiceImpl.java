@@ -8,6 +8,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.Collections;
 import java.util.List;
 
+import static com.sda.eshop.utils.Constants.USER_FAIL_FIND_BY_ID;
+import static com.sda.eshop.utils.Constants.USER_FIND_ALL;
+import static com.sda.eshop.utils.Constants.USER_FIND_BY_USERNAME;
+import static com.sda.eshop.utils.Constants.USER_SAVE;
+
 public class UserServiceImpl implements UserService {
 
     private static final Logger log = LogManager.getLogger(UserServiceImpl.class);
@@ -21,7 +26,7 @@ public class UserServiceImpl implements UserService {
     // must mock all used objects (with method calls)
     @Override
     public List<User> findAll() {
-        log.info("Trying to find all users");
+        log.info(USER_FIND_ALL);
 
         // this works for sure (tested in another test)
         List<User> users = userDao.findAll();
@@ -36,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        log.info("Trying to create a new user");
+        log.info(USER_SAVE);
 
         // validate
         if (isValid(user)) {
@@ -56,19 +61,17 @@ public class UserServiceImpl implements UserService {
             null != user.getPassword();
     }
 
-    // TODO: findByUsername
     private User findByUsername(String username) {
-        log.info("Trying to find user by username: {}", username);
+        log.info(USER_FIND_BY_USERNAME, username);
 
         User user = userDao.findByUsername(username);
 
         if (null == user) {
-            log.info("Failed to find a user with username: {}", username);
+            log.info(USER_FAIL_FIND_BY_ID, username);
             return null;
         }
 
         return user;
     }
-
 
 }
