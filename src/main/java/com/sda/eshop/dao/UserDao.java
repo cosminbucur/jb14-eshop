@@ -2,6 +2,9 @@ package com.sda.eshop.dao;
 
 import com.sda.eshop.config.HibernateUtils;
 import com.sda.eshop.model.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -11,17 +14,37 @@ import java.util.stream.Collectors;
 
 public class UserDao {
 
-    //we can modify the constructor used to create the new User object later (create another constructor in User.class) and add more parameters to the method
+    private static final Logger logger = LogManager.getLogger(UserDao.class);
+
+    /* CRUD */
+
+    /**
+     * Insert a new User in the database.
+     *
+     * @param user user to be saved
+     */
     public void save(User user) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-        session.save(user);
-        transaction.commit();
-        session.close();
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = openSession();
+            transaction = session.beginTransaction();
+            session.save(user);
+            transaction.commit();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            logger.error(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
     public User findById(Long id) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
+        Session session = openSession();
         String selectUserById = "from User where id= :id";
         Query<User> foundUserById = session.createQuery(selectUserById);
         foundUserById.setParameter("id", id);
@@ -30,8 +53,39 @@ public class UserDao {
         return foundUser;
     }
 
+    public User findByIdSimple(Long id) {
+        User user = null;
+        Session session = openSession();
+        try {
+
+            session.find(User.class, id);
+
+        } catch (HibernateException e) {
+            logger.error(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return user;
+    }
+
+    // try with resources sytnax
+    // try ( open some resource ) { }
+    // catch () {}
+    // no need to close resources in finally
+    public User findByIdSimplest(Long id) {
+        User user = null;
+        try (Session session = openSession()) {
+            session.find(User.class, id);
+        } catch (HibernateException e) {
+            logger.error(e.getMessage());
+        }
+        return user;
+    }
+
     public List<User> findAll() {
-        Session session = HibernateUtils.getSessionFactory().openSession();
+        Session session = openSession();
         String selectAllUsers = "from User";
         Query<User> foundUsers = session.createQuery(selectAllUsers);
         List<User> userList = foundUsers.getResultStream().collect(Collectors.toList());
@@ -40,7 +94,7 @@ public class UserDao {
     }
 
     public void update(Long id, String updatedName) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
+        Session session = openSession();
         User userToBeUpdated = findById(id);
         Transaction transaction = session.beginTransaction();
         userToBeUpdated.setName(updatedName);
@@ -50,11 +104,17 @@ public class UserDao {
     }
 
     public void delete(Long id) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
+        Session session = openSession();
         User userToBeDeleted = findById(id);
         Transaction transaction = session.beginTransaction();
         session.delete(userToBeDeleted);
         transaction.commit();
         session.close();
+    }
+
+    /* HELPER METHODS */
+
+    private Session openSession() {
+        return HibernateUtils.getSessionFactory().openSession();
     }
 }
