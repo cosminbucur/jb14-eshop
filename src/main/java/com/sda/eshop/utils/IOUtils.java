@@ -38,11 +38,12 @@ public class IOUtils {
     }
 
     // TODO: do not hardcode the path here (use it as a parameter for the method)
-    public static List<User> loadUsers() {
+    public static List<User> loadUsers(String filePath) {
 
         // TODO: ADVANCED - read how to load yml files from resources folder
         // https://stackabuse.com/reading-and-writing-yaml-files-in-java-with-jackson/
-        Path path = Paths.get("C:\\Working\\dev\\jb14-eshop\\src\\main\\resources\\users.txt");
+        //Path path = Paths.get("C:\\Dev\\jb14-eshop\\src\\main\\resources\\users.txt");
+        Path path = Paths.get(filePath);
         List<User> result = new ArrayList<>();
         try {
             List<String> names = Files.readAllLines(path);
