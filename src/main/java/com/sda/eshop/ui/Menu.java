@@ -1,5 +1,6 @@
 package com.sda.eshop.ui;
 
+import com.sda.eshop.controller.UserController;
 import com.sda.eshop.model.User;
 import com.sda.eshop.service.UserService;
 
@@ -10,6 +11,7 @@ public class Menu {
 
     public static final String SELECT_AN_OPTION = "Select an option:";
     public static final UserService userService = new UserService();
+    public static final UserController userController = new UserController();
 
     /*
     TODO: build main menu
@@ -83,12 +85,7 @@ public class Menu {
     }
 
     private static void showAllUsers() {
-        // TODO: implement controller
-        // userController.findAll();
-
-        List<User> users = userService.findAll();
-
-        // TODO: print all items in list
+        List<User> users = userController.findAll();
         users.forEach(user -> System.out.println(user));
 
 //        userService.findAll()
