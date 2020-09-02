@@ -26,10 +26,20 @@ public class HibernateUtils {
     }
 
     private static Configuration createConfig() {
-        // TODO: read properties from a yml file
+        // TODO: read properties from a yml file - DONE
         Configuration configuration = new Configuration();
 
+        //added properties from yml file
         Properties props = new Properties();
+        props.put(Environment.DRIVER, DbProperties.getSpecificProperty().getDriver());
+        props.put(Environment.URL, DbProperties.getSpecificProperty().getUrl());
+        props.put(Environment.DIALECT, DbProperties.getSpecificProperty().getDialect());
+        props.put(Environment.HBM2DDL_AUTO, DbProperties.getSpecificProperty().getHbm2DdlAuto());
+        props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, DbProperties.getSpecificProperty().getCurrentSessionContextClass());
+        props.put(Environment.USER, DbProperties.getSpecificProperty().getUser());
+        props.put(Environment.PASS, DbProperties.getSpecificProperty().getPass());
+        props.put(Environment.SHOW_SQL, DbProperties.getSpecificProperty().getShowSql());
+        /*
         props.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
         props.put(Environment.URL, "jdbc:mysql://localhost:3306/eshop?serverTimezone=UTC");
         props.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
@@ -37,7 +47,7 @@ public class HibernateUtils {
         props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         props.put(Environment.USER, "root");
         props.put(Environment.PASS, "root");
-        props.put(Environment.SHOW_SQL, "false");
+        props.put(Environment.SHOW_SQL, "false");*/
 
         configuration.setProperties(props);
 
