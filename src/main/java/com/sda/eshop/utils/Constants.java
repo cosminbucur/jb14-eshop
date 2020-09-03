@@ -13,4 +13,8 @@ public class Constants {
     // product service constants
 
     // order service constants
+
+    //IOUtil constants
+
+    public static final String UNABLE_TO_OPEN_FILE = "Error while trying to open file! {} ";
 }
