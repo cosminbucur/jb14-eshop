@@ -7,25 +7,25 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-public class DbProperties {
+public class PropertiesLoader {
 
-    public final static ClassToMapDbProperties getSpecificProperty() {
+    public final static DbConfig getSpecificProperty() {
 
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         File file = new File(Objects.requireNonNull(classLoader.getResource("properties.yml")).getFile());
 
         ObjectMapper om = new ObjectMapper(new YAMLFactory());
 
-        ClassToMapDbProperties classToMapDbProperties = null;
+        DbConfig dbConfig = null;
 
         {
             try {
-                classToMapDbProperties = om.readValue(file, ClassToMapDbProperties.class);
+                dbConfig = om.readValue(file, DbConfig.class);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return classToMapDbProperties;
+        return dbConfig;
     }
 
 

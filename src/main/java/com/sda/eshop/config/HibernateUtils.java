@@ -31,14 +31,14 @@ public class HibernateUtils {
 
         //added properties from yml file
         Properties props = new Properties();
-        props.put(Environment.DRIVER, DbProperties.getSpecificProperty().getDriver());
-        props.put(Environment.URL, DbProperties.getSpecificProperty().getUrl());
-        props.put(Environment.DIALECT, DbProperties.getSpecificProperty().getDialect());
-        props.put(Environment.HBM2DDL_AUTO, DbProperties.getSpecificProperty().getHbm2DdlAuto());
-        props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, DbProperties.getSpecificProperty().getCurrentSessionContextClass());
-        props.put(Environment.USER, DbProperties.getSpecificProperty().getUser());
-        props.put(Environment.PASS, DbProperties.getSpecificProperty().getPass());
-        props.put(Environment.SHOW_SQL, DbProperties.getSpecificProperty().getShowSql());
+        props.put(Environment.DRIVER, PropertiesLoader.getSpecificProperty().getDriver());
+        props.put(Environment.URL, PropertiesLoader.getSpecificProperty().getUrl());
+        props.put(Environment.DIALECT, PropertiesLoader.getSpecificProperty().getDialect());
+        props.put(Environment.HBM2DDL_AUTO, PropertiesLoader.getSpecificProperty().getHbm2DdlAuto());
+        props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, PropertiesLoader.getSpecificProperty().getCurrentSessionContextClass());
+        props.put(Environment.USER, PropertiesLoader.getSpecificProperty().getUser());
+        props.put(Environment.PASS, PropertiesLoader.getSpecificProperty().getPass());
+        props.put(Environment.SHOW_SQL, PropertiesLoader.getSpecificProperty().getShowSql());
         /*
         props.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
         props.put(Environment.URL, "jdbc:mysql://localhost:3306/eshop?serverTimezone=UTC");

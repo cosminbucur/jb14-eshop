@@ -1,7 +1,7 @@
 package com.sda.eshop.config;
 
 
-public class ClassToMapDbProperties {
+public class DbConfig {
 
     private String driver;
     private String url;
@@ -12,12 +12,12 @@ public class ClassToMapDbProperties {
     private String pass;
     private String showSql;
 
-    public ClassToMapDbProperties() {
+    public DbConfig() {
     }
 
-    public ClassToMapDbProperties(String driver, String url, String dialect, String hbm2DdlAuto,
-                                  String currentSessionContextClass, String user,
-                                  String pass, String showSql) {
+    public DbConfig(String driver, String url, String dialect, String hbm2DdlAuto,
+                    String currentSessionContextClass, String user,
+                    String pass, String showSql) {
         this.driver = driver;
         this.url = url;
         this.dialect = dialect;
