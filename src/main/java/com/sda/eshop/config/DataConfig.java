@@ -30,7 +30,8 @@ public class DataConfig {
 
         // create users
         List<User> users = IOUtils.loadUsers(USERS_SOURCE);
-        userDao.saveAll(users);
+        //userDao.saveAll(users);
+        userDao.saveAll(IOUtils.readUsersEnhanced());
 
         // create products
         Product product1 = new Product("TV", 500d, 20);
