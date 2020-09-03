@@ -13,7 +13,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -47,9 +46,8 @@ public class IOUtils {
         List<String> firstThreeLettersOfFirstName = null;
         List<String> readFirstThreeLettersOfLastName = null;
         List<String> fullName = null;
-        Random random = new Random();
-        int min = 1;
-        int max = 9;
+        int min = 10;
+        int max = 99;
 
         try
                 (Stream<String> stream = Files.lines(Paths.get(sourceFile))) {
@@ -60,6 +58,7 @@ public class IOUtils {
 
 
         } catch (IOException e) {
+            logger.fatal(Constants.UNABLE_TO_OPEN_FILE, sourceFile, e);
             e.printStackTrace();
         }
 
@@ -73,6 +72,7 @@ public class IOUtils {
                     .map(s -> s.substring(0, 3).trim())
                     .collect(Collectors.toList());
         } catch (IOException e) {
+            logger.fatal(Constants.UNABLE_TO_OPEN_FILE, sourceFile, e);
             e.printStackTrace();
         }
 
@@ -86,13 +86,14 @@ public class IOUtils {
                     .map(s -> s.substring(0, 3).trim())
                     .collect(Collectors.toList());
         } catch (IOException e) {
+            logger.fatal(Constants.UNABLE_TO_OPEN_FILE, sourceFile, e);
             e.printStackTrace();
         }
         for (int i = 0; i < fullName.size(); i++) {
 
             User user = new User(fullName.get(i), (firstThreeLettersOfFirstName.get(i)
                     + readFirstThreeLettersOfLastName.get(i)).toLowerCase()
-                    + random.nextInt((max - min) + 1) + min, password);
+                    + (int) (Math.random() * ((max - min) + 1) + min), password);
             resultedUsers.add(user);
         }
         return resultedUsers;
