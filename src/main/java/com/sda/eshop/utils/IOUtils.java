@@ -13,7 +13,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class IOUtils {
 
@@ -37,7 +39,65 @@ public class IOUtils {
         return usersList;
     }
 
-    // TODO: enhance the method for loading users
+    // TODO: enhance the method for loading users - DONE
+    public static List<User> readUsersEnhanced() {
+        String password = "admin";
+        String sourceFile = "src/main/resources/users.txt";
+        List<User> resultedUsers = new ArrayList<>();
+        List<String> firstThreeLettersOfFirstName = null;
+        List<String> readFirstThreeLettersOfLastName = null;
+        List<String> fullName = null;
+        Random random = new Random();
+        int min = 1;
+        int max = 9;
+
+        try
+                (Stream<String> stream = Files.lines(Paths.get(sourceFile))) {
+            fullName = stream
+                    .map(s -> s.split(","))
+                    .map(s -> s[0])
+                    .collect(Collectors.toList());
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try
+                (Stream<String> stream = Files.lines(Paths.get(sourceFile))) {
+            firstThreeLettersOfFirstName = stream
+                    .map(s -> s.split(","))
+                    .map(s -> s[0])
+                    .map(s -> s.split(" "))
+                    .map(s -> s[0])
+                    .map(s -> s.substring(0, 3).trim())
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try
+                (Stream<String> stream = Files.lines(Paths.get(sourceFile))) {
+            readFirstThreeLettersOfLastName = stream
+                    .map(s -> s.split(","))
+                    .map(s -> s[0])
+                    .map(s -> s.split(" "))
+                    .map(s -> s[1])
+                    .map(s -> s.substring(0, 3).trim())
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < fullName.size(); i++) {
+
+            User user = new User(fullName.get(i), (firstThreeLettersOfFirstName.get(i)
+                    + readFirstThreeLettersOfLastName.get(i)).toLowerCase()
+                    + random.nextInt((max - min) + 1) + min, password);
+            resultedUsers.add(user);
+        }
+        return resultedUsers;
+    }
+
     /*
     Read from file line by line:
 
@@ -58,8 +118,8 @@ public class IOUtils {
         try {
             List<String> names = Files.readAllLines(path);
             result = names.stream()
-                .map(name -> new User(name))
-                .collect(Collectors.toList());
+                    .map(name -> new User(name))
+                    .collect(Collectors.toList());
         } catch (IOException e) {
             logger.error("Failed read from file! {}", path);
         }
