@@ -32,11 +32,11 @@ public class UserController {
         return userService.findByUsername(username);
     }
 
-    public User updateUser(Long id, User userDetails) {
+    public User update(Long id, User userDetails) {
         return userService.update(id, userDetails);
     }
 
-    public User updateUser(User user) {
+    public User update(User user) {
         return userService.update(user);
     }
 

@@ -41,6 +41,10 @@ public class Menu {
                 System.out.println("Thanks for buying. Bye!");
                 break;
             }
+            case 3: {
+                showMyAccount();
+                break;
+            }
             case 4: {
                 showAdminArea();
                 break;
@@ -51,6 +55,51 @@ public class Menu {
             }
             default: {
                 showMainMenu();
+                break;
+            }
+        }
+    }
+
+    private static void showMyAccount() {
+        System.out.println("Current user: " + loggedUser.toString());
+        System.out.println(SELECT_AN_OPTION);
+        System.out.println("1. Change password");
+        System.out.println(GO_BACK);
+
+        int option = in.nextInt();
+
+        switch (option) {
+            case 1: {
+                System.out.println("Insert your current password: ");
+                String oldPassword = "test";
+
+                String newPassword = "test";
+                String retypedNewPassword = "repeat";
+
+                while (!oldPassword.equals(loggedUser.getPassword())) {
+                    oldPassword = in.next();
+                }
+
+                while (!newPassword.equals(retypedNewPassword)) {
+                    System.out.println("Insert new password: ");
+                    newPassword = in.next();
+
+                    System.out.println("Please insert new password again: ");
+                    retypedNewPassword = in.next();
+                }
+
+                loggedUser.setPassword(newPassword);
+                userController.update(loggedUser);
+
+                showMyAccount();
+                break;
+            }
+            case 0: {
+                showMainMenu();
+                break;
+            }
+            default: {
+                showMyAccount();
                 break;
             }
         }
@@ -166,7 +215,7 @@ public class Menu {
                 updateData = in.next();
 
                 foundUser.setName(updateData);
-                updatedUser = userController.updateUser(foundUser);
+                updatedUser = userController.update(foundUser);
                 break;
             }
             case 2: {
@@ -174,7 +223,7 @@ public class Menu {
                 updateData = in.next();
 
                 foundUser.setUsername(updateData);
-                updatedUser = userController.updateUser(foundUser);
+                updatedUser = userController.update(foundUser);
                 break;
             }
             case 3: {
@@ -182,7 +231,7 @@ public class Menu {
                 updateData = in.next();
 
                 foundUser.setPassword(updateData);
-                updatedUser = userController.updateUser(foundUser);
+                updatedUser = userController.update(foundUser);
                 break;
             }
             default: {
