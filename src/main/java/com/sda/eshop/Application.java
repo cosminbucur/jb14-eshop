@@ -21,7 +21,8 @@ public class Application {
         System.out.println("************");
 
         // TODO: register new user
-        Menu.showLogin();
+        Menu.autoLogin();
+//        Menu.showLogin();
         Menu.showMainMenu();
     }
 

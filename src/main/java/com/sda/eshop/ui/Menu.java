@@ -276,6 +276,7 @@ public class Menu {
         if (isAuthenticated) {
             // find user in db
             loggedUser = userController.findByUsername(username);
+            System.out.println("Logged in as " + loggedUser.getName());
         }
     }
 
@@ -290,5 +291,14 @@ public class Menu {
         } else if (answer.equals("n")) {
             showMainMenu();
         }
+    }
+
+    /*
+    Used to bypass security
+     */
+    // TODO: remove this in production
+    public static void autoLogin() {
+        loggedUser = userController.findByUsername("admin");
+        System.out.println("Logged in as " + loggedUser.getName());
     }
 }
