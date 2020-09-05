@@ -74,7 +74,7 @@ public class UserDao {
         return user;
     }
 
-    // try with resources sytnax
+    // try with resources syntax
     // try ( open some resource ) { }
     // catch () {}
     // no need to close resources in finally
@@ -106,6 +106,22 @@ public class UserDao {
             logger.error(e.getMessage());
         }
         return user;
+    }
+
+    public boolean usernameExists(String username) {
+        Session session = openSession();
+        String hql = "FROM User u WHERE u.username = :username";
+        Query<User> query = session.createQuery(hql);
+        query.setParameter("username", username);
+
+        User foundUser = null;
+        try {
+            foundUser = query.getSingleResult();
+        } catch (Exception e) {
+            // not found
+        }
+
+        return null != foundUser;
     }
 
     public List<User> findAll() {

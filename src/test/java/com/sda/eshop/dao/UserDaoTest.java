@@ -27,6 +27,37 @@ class UserDaoTest {
     }
 
     @Test
+    void givenUser_whenUsernameExists_thenReturnTrue() {
+        // given
+        User user = new User();
+        user.setUsername("alex");
+
+        UserDao userDao = new UserDao();
+        userDao.save(user);
+
+        boolean expected = true;
+
+        // when
+        boolean actual = userDao.usernameExists(user.getUsername());
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void givenNoUser_whenUsernameExists_thenReturnFalse() {
+        // given
+        UserDao userDao = new UserDao();
+        boolean expected = false;
+
+        // when
+        boolean actual = userDao.usernameExists("andrei");
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
     void findById() {
     }
 

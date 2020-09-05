@@ -46,6 +46,13 @@ public class UserServiceImpl implements UserService {
         // validate
         if (isValid(user)) {
             // prevent duplicate username
+
+            // daca username exista
+            // cauta in tabel
+            if (userDao.usernameExists(user.getUsername())) {
+
+            }
+
             User foundUser = findByUsername(user.getUsername());
             if (null != foundUser) {
                 log.error("This username already exists. Try again!");
