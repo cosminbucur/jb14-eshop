@@ -15,19 +15,6 @@ public class DbConfig {
     public DbConfig() {
     }
 
-    public DbConfig(String driver, String url, String dialect, String hbm2DdlAuto,
-                    String currentSessionContextClass, String user,
-                    String pass, String showSql) {
-        this.driver = driver;
-        this.url = url;
-        this.dialect = dialect;
-        this.hbm2DdlAuto = hbm2DdlAuto;
-        this.currentSessionContextClass = currentSessionContextClass;
-        this.user = user;
-        this.pass = pass;
-        this.showSql = showSql;
-    }
-
     public String getDriver() {
         return driver;
     }
@@ -91,20 +78,5 @@ public class DbConfig {
     public void setShowSql(String showSql) {
         this.showSql = showSql;
     }
-
-    @Override
-    public String toString() {
-        return "ClassToMapProperties{" +
-                "driver='" + driver + '\'' +
-                ", url='" + url + '\'' +
-                ", dialect='" + dialect + '\'' +
-                ", hbm2DdlAuto='" + hbm2DdlAuto + '\'' +
-                ", currentSessionContextClass='" + currentSessionContextClass + '\'' +
-                ", user='" + user + '\'' +
-                ", pass='" + "****" + '\'' +
-                ", showSql='" + showSql + '\'' +
-                '}';
-    }
-
 
 }

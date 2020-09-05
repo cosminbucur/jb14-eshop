@@ -9,24 +9,17 @@ import java.util.Objects;
 
 public class PropertiesLoader {
 
-    public final static DbConfig getSpecificProperty() {
-
+    public static DbConfig loadProperties() {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         File file = new File(Objects.requireNonNull(classLoader.getResource("properties.yml")).getFile());
-
-        ObjectMapper om = new ObjectMapper(new YAMLFactory());
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         DbConfig dbConfig = null;
-
-        {
-            try {
-                dbConfig = om.readValue(file, DbConfig.class);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            dbConfig = mapper.readValue(file, DbConfig.class);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return dbConfig;
     }
-
-
 }

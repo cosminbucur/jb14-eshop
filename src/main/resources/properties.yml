@@ -2,8 +2,6 @@ driver: com.mysql.cj.jdbc.Driver
 url: jdbc:mysql://localhost:3306/eshop?serverTimezone=UTC
 dialect: org.hibernate.dialect.MySQL8Dialect
 hbm2DdlAuto: create-drop
-currentSessionContextClass: thread
 user: root
-pass: root
+pass: Rootpass3#
 showSql: false
-
