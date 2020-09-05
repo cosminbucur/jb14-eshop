@@ -16,6 +16,7 @@ import static com.sda.eshop.utils.Constants.USER_FIND_BY_ID;
 import static com.sda.eshop.utils.Constants.USER_FIND_BY_USERNAME;
 import static com.sda.eshop.utils.Constants.USER_SAVE;
 import static com.sda.eshop.utils.Constants.USER_UPDATE;
+import static com.sda.eshop.utils.Constants.USER_UPDATE_BY_ID;
 
 public class UserServiceImpl implements UserService {
 
@@ -97,9 +98,15 @@ public class UserServiceImpl implements UserService {
     }
 
     public User update(Long id, User userDetails) {
-        log.info(USER_UPDATE, id, userDetails);
+        log.info(USER_UPDATE_BY_ID, id, userDetails);
 
         return userDao.update(id, userDetails);
+    }
+
+    public User update(User user) {
+        log.info(USER_UPDATE, user);
+
+        return userDao.update(user);
     }
 
     public void delete(Long id) {

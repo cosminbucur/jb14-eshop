@@ -10,9 +10,11 @@ import com.sda.eshop.service.UserServiceImpl;
 import java.util.List;
 import java.util.Scanner;
 
-public class Menu {
+import static com.sda.eshop.utils.Constants.GO_BACK;
+import static com.sda.eshop.utils.Constants.INSERT_ID_TO_SEARCH;
+import static com.sda.eshop.utils.Constants.SELECT_AN_OPTION;
 
-    public static final String SELECT_AN_OPTION = "Select an option:";
+public class Menu {
 
     public static final UserDao userDao = new UserDao();
     public static final UserService userService = new UserServiceImpl(userDao);
@@ -136,14 +138,74 @@ public class Menu {
     }
 
     private static void showEditUser() {
+        System.out.println(INSERT_ID_TO_SEARCH);
+
+        Long id = Long.valueOf(in.nextInt());
+
+        User foundUser = userController.findById(id);
+
+        if (foundUser != null) {
+            System.out.println(SELECT_AN_OPTION);
+            System.out.println("1. Name: " + foundUser.getName());
+            System.out.println("2. Username: " + foundUser.getUsername());
+            System.out.println("3. Password: ****");
+            System.out.println(GO_BACK);
+        }
+
+        int option = in.nextInt();
+        String updateData;
+        User updatedUser = null;
+
+        switch (option) {
+            case 0: {
+                showCrudUser();
+                break;
+            }
+            case 1: {
+                System.out.println("Insert new name: ");
+                updateData = in.next();
+
+                foundUser.setName(updateData);
+                updatedUser = userController.updateUser(foundUser);
+                break;
+            }
+            case 2: {
+                System.out.println("Insert new username: ");
+                updateData = in.next();
+
+                foundUser.setUsername(updateData);
+                updatedUser = userController.updateUser(foundUser);
+                break;
+            }
+            case 3: {
+                System.out.println("Insert new password: ");
+                updateData = in.next();
+
+                foundUser.setPassword(updateData);
+                updatedUser = userController.updateUser(foundUser);
+                break;
+            }
+            default: {
+                System.out.println("Incorrect option. Going back...");
+                showCrudUser();
+                break;
+            }
+        }
+
+        if (null != updatedUser) {
+            System.out.println("User successfully updated.");
+            System.out.println(updatedUser);
+        } else {
+            System.out.println("User not updated.");
+        }
+
+        System.out.println("Going back...");
+        showCrudUser();
     }
 
     private static void showDeleteUser() {
-        // find all, saw id
-        // delete by id
-
         System.out.println("Insert the user ID to delete:");
-        System.out.println("0. BACK");
+        System.out.println(GO_BACK);
 
         Integer userId = in.nextInt();
 
@@ -184,17 +246,15 @@ public class Menu {
 
         System.out.println("1. SAVE");
         System.out.println("2. RESET");
-        System.out.println("0. BACK");
+        System.out.println(GO_BACK);
 
         Integer option = in.nextInt();
 
         if (option.equals(0)) {
             showCrudUser();
         } else if (option.equals(1)) {
-            // save
             User newUser = new User(name, username, password);
             userController.save(newUser);
-            // back
             showCrudUser();
         } else if (option.equals(2)) {
             showSaveUser();

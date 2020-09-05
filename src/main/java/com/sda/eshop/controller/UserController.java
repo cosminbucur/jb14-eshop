@@ -36,6 +36,10 @@ public class UserController {
         return userService.update(id, userDetails);
     }
 
+    public User updateUser(User user) {
+        return userService.update(user);
+    }
+
     public void deleteUser(Long id) {
         userService.delete(id);
     }

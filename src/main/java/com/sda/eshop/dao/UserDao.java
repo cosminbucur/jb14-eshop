@@ -160,6 +160,25 @@ public class UserDao {
         return updatedUser;
     }
 
+    public User update(User user) {
+        Transaction transaction = null;
+        User updatedUser = null;
+        try (Session session = openSession()) {
+            transaction = session.beginTransaction();
+
+            session.update(user);
+
+            transaction.commit();
+            updatedUser = findById(user.getId());
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            logger.error(e.getMessage());
+        }
+        return updatedUser;
+    }
+
     public void delete(Long id) {
         Session session = openSession();
         User userToBeDeleted = findById(id);
