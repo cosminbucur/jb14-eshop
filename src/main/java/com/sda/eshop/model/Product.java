@@ -102,7 +102,6 @@ public class Product {
             ", price=" + price +
             ", isInStock=" + isInStock +
             ", quantity=" + quantity +
-            ", orders=" + orders +
             '}';
     }
 }

@@ -2,10 +2,14 @@ package com.sda.eshop.ui;
 
 import com.sda.eshop.controller.ProductController;
 import com.sda.eshop.controller.UserController;
+import com.sda.eshop.dao.OrderDao;
+import com.sda.eshop.dao.ProductDao;
 import com.sda.eshop.dao.UserDao;
+import com.sda.eshop.model.Order;
 import com.sda.eshop.model.Product;
 import com.sda.eshop.model.User;
 import com.sda.eshop.service.AuthenticationService;
+import com.sda.eshop.service.ProductService;
 import com.sda.eshop.service.UserService;
 import com.sda.eshop.service.UserServiceImpl;
 
@@ -23,7 +27,12 @@ public class Menu {
     public static final UserService userService = new UserServiceImpl(userDao);
     public static final AuthenticationService authService = new AuthenticationService(userService);
     public static final UserController userController = new UserController(userService, authService);
-    public static final ProductController productController = new ProductController();
+    public static final ProductDao productDao = new ProductDao();
+    public static final ProductService productService = new ProductService(productDao);
+    public static final ProductController productController = new ProductController(productService);
+    public static final OrderDao orderDao = new OrderDao();
+    public static final OrderService orderService = new OrderService(orderDao);
+    public static final OrderController orderController = new OrderController(orderService);
     public static User loggedUser;
 
     private static Scanner in = new Scanner(System.in);
@@ -95,6 +104,25 @@ public class Menu {
                 System.out.println(GO_BACK);
             }
         }
+        System.out.println(productsToBuy);
+
+        if (!productsToBuy.isEmpty()) {
+            // create order
+            Order newOrder = new Order(loggedUser, productsToBuy);
+
+            // save
+            orderController.save(newOrder);
+            System.out.println("Order placed!");
+
+            System.out.println("Placed orders: ");
+            System.out.println(newOrder);
+            orderController.findByUser(loggedUser)
+                .forEach(order -> System.out.println());
+        } else {
+            System.out.println("Going back...");
+        }
+
+        showMainMenu();
     }
 
     private static void showMyAccount() {
@@ -313,15 +341,6 @@ public class Menu {
         }
     }
 
-    /*
-            3. Create
-            Name
-            Username
-            Password
-            1. SAVE
-            2. RESET
-            0. BACK
- */
     private static void showSaveUser() {
         System.out.println("Insert name");
         String name = in.next();

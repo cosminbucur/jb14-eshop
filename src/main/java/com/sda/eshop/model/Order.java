@@ -75,6 +75,14 @@ public class Order {
         this.user = user;
     }
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
     // just for example
     private Double calculateTotalPrice(List<Product> products) {
         Double result = 0.0;
@@ -90,9 +98,7 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) &&
-            Objects.equals(totalPrice, order.totalPrice) &&
-            Objects.equals(user, order.user);
+        return Objects.equals(id, order.id);
     }
 
     @Override

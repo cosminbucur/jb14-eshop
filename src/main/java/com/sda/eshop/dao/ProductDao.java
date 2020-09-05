@@ -10,7 +10,6 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProductDao {
 
@@ -47,9 +46,19 @@ public class ProductDao {
         Session session = openSession();
         String selectAllProducts = "from Product";
         Query<Product> foundProducts = session.createQuery(selectAllProducts);
-        List<Product> productList = foundProducts.getResultStream().collect(Collectors.toList());
+        List<Product> productList = foundProducts.list();
         session.close();
         return productList;
+    }
+
+    public Product findById(Long id) {
+        Session session = openSession();
+        String selectProductById = "from Product where id= :id";
+        Query<Product> foundProductById = session.createQuery(selectProductById);
+        foundProductById.setParameter("id", id);
+        Product foundProduct = foundProductById.getResultStream().findFirst().orElse(null);
+        session.close();
+        return foundProduct;
     }
 
     /* HELPER METHODS */
@@ -57,5 +66,4 @@ public class ProductDao {
     private Session openSession() {
         return HibernateUtils.getSessionFactory().openSession();
     }
-
 }

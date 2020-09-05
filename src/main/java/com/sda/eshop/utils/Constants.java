@@ -20,6 +20,9 @@ public class Constants {
     public static final String USERNAME_ALREADY_EXISTS = "Username: {} already exists!";
 
     // product service constants
+    public static final String PRODUCT_FAIL_FIND_BY_ID = "Failed to find product by id: {}";
+    public static final String PRODUCT_FIND_ALL = "Trying to find all products";
+    public static final String PRODUCT_FIND_BY_ID = "Trying to find products by id: {}";
 
     // order service constants
 
