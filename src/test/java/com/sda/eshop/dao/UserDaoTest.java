@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class UserDaoTest {
 
     @Test
-    void save() {
+    void givenUser_whenSave_thenReturnSavedUser() {
         // given
         UserDao userdao = new UserDao();
         User user = new User();
@@ -20,10 +20,12 @@ class UserDaoTest {
 
         // when
         List<User> usersBefore = userdao.findAll();
-        userdao.save(user);
+        User savedUser = userdao.save(user);
         List<User> usersAfter = userdao.findAll();
+
         // then
         assertThat(usersAfter.size()).isGreaterThan(usersBefore.size());
+        assertThat(savedUser.getUsername()).isEqualTo("Alexutu");
     }
 
     @Test

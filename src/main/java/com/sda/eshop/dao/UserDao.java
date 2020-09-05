@@ -23,14 +23,18 @@ public class UserDao {
      *
      * @param user user to be saved
      */
-    public void save(User user) {
+    public User save(User user) {
         Session session = null;
         Transaction transaction = null;
+
+        User result = null;
         try {
             session = openSession();
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
+
+            result = findByUsername(user.getUsername());
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -41,6 +45,7 @@ public class UserDao {
                 session.close();
             }
         }
+        return result;
     }
 
     public void saveAll(List<User> users) {

@@ -8,8 +8,10 @@ import org.apache.logging.log4j.Logger;
 import java.util.Collections;
 import java.util.List;
 
+import static com.sda.eshop.utils.Constants.USERNAME_ALREADY_EXISTS;
 import static com.sda.eshop.utils.Constants.USER_FAIL_FIND_BY_ID;
 import static com.sda.eshop.utils.Constants.USER_FIND_ALL;
+import static com.sda.eshop.utils.Constants.USER_FIND_BY_ID;
 import static com.sda.eshop.utils.Constants.USER_FIND_BY_USERNAME;
 import static com.sda.eshop.utils.Constants.USER_SAVE;
 
@@ -40,32 +42,43 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(User user) {
+    public User save(User user) {
         log.info(USER_SAVE);
+
+        User result = null;
 
         // validate
         if (isValid(user)) {
             // prevent duplicate username
 
-            // daca username exista
-            // cauta in tabel
             if (userDao.usernameExists(user.getUsername())) {
-
-            }
-
-            User foundUser = findByUsername(user.getUsername());
-            if (null != foundUser) {
-                log.error("This username already exists. Try again!");
+                log.error(USERNAME_ALREADY_EXISTS, user.getUsername());
+                return null;
             } else {
                 userDao.save(user);
             }
         }
+        return result;
     }
 
     private boolean isValid(User user) {
         return null != user.getName() &&
             null != user.getUsername() &&
             null != user.getPassword();
+    }
+
+    @Override
+    public User findById(Long id) {
+        log.info(USER_FIND_BY_ID, id);
+
+        User user = userDao.findById(id);
+
+        if (null == user) {
+            log.info(USER_FAIL_FIND_BY_ID, id);
+            return null;
+        }
+
+        return user;
     }
 
     public User findByUsername(String username) {
