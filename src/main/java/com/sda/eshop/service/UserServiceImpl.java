@@ -9,11 +9,13 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.sda.eshop.utils.Constants.USERNAME_ALREADY_EXISTS;
+import static com.sda.eshop.utils.Constants.USER_DELETE;
 import static com.sda.eshop.utils.Constants.USER_FAIL_FIND_BY_ID;
 import static com.sda.eshop.utils.Constants.USER_FIND_ALL;
 import static com.sda.eshop.utils.Constants.USER_FIND_BY_ID;
 import static com.sda.eshop.utils.Constants.USER_FIND_BY_USERNAME;
 import static com.sda.eshop.utils.Constants.USER_SAVE;
+import static com.sda.eshop.utils.Constants.USER_UPDATE;
 
 public class UserServiceImpl implements UserService {
 
@@ -94,4 +96,14 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    public User update(Long id, User userDetails) {
+        log.info(USER_UPDATE, id, userDetails);
+
+        return userDao.update(id, userDetails);
+    }
+
+    public void delete(Long id) {
+        log.info(USER_DELETE, id);
+        userDao.delete(id);
+    }
 }

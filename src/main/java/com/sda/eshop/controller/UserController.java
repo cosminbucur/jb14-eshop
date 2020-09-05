@@ -24,8 +24,20 @@ public class UserController {
         userService.save(user);
     }
 
+    public User findById(Long id) {
+        return userService.findById(id);
+    }
+
     public User findByUsername(String username) {
         return userService.findByUsername(username);
+    }
+
+    public User updateUser(Long id, User userDetails) {
+        return userService.update(id, userDetails);
+    }
+
+    public void deleteUser(Long id) {
+        userService.delete(id);
     }
 
     public Boolean login(String username, String password) {

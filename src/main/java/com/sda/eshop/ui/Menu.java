@@ -75,7 +75,10 @@ public class Menu {
     private static void showCrudUser() {
         System.out.println(SELECT_AN_OPTION);
         System.out.println("1. Find all");
+        System.out.println("2. Find one");
         System.out.println("3. Create");
+        System.out.println("4. Edit existing user");
+        System.out.println("5. Delete existing user");
         System.out.println("0. BACK");
 
         int option = in.nextInt();
@@ -85,8 +88,20 @@ public class Menu {
                 showAllUsers();
                 break;
             }
+            case 2: {
+                showFindUser();
+                break;
+            }
             case 3: {
                 showSaveUser();
+                break;
+            }
+            case 4: {
+                showEditUser();
+                break;
+            }
+            case 5: {
+                showDeleteUser();
                 break;
             }
             default: {
@@ -102,6 +117,52 @@ public class Menu {
 
 //        userService.findAll()
 //            .forEach(user -> System.out.println(user));
+        showCrudUser();
+    }
+
+    private static void showFindUser() {
+        System.out.println("Insert name to search");
+
+        String username = in.next();
+        User foundUser = userController.findByUsername(username);
+
+        if (null != foundUser) {
+            System.out.println(foundUser);
+            showCrudUser();
+        } else {
+            System.out.println("User " + username + " not found");
+            showCrudUser();
+        }
+    }
+
+    private static void showEditUser() {
+    }
+
+    private static void showDeleteUser() {
+        // find all, saw id
+        // delete by id
+
+        System.out.println("Insert the user ID to delete:");
+        System.out.println("0. BACK");
+
+        Integer userId = in.nextInt();
+
+        if (userId.equals(0)) {
+            showCrudUser();
+        }
+        Long id = Long.valueOf(userId);
+        User userToDelete = userController.findById(id);
+
+        // TODO: make delete return boolean to log messages
+        // TODO: prevent delete current user
+        if (userToDelete != null) {
+            userController.deleteUser(id);
+            System.out.println("User ID= " + userId + " deleted.");
+            System.out.println("Going back...");
+            showCrudUser();
+        } else {
+            System.out.println("User ID= " + userId + " not deleted!");
+        }
     }
 
     /*

@@ -66,9 +66,7 @@ public class UserDao {
         User user = null;
         Session session = openSession();
         try {
-
             session.find(User.class, id);
-
         } catch (HibernateException e) {
             logger.error(e.getMessage());
         } finally {
@@ -106,7 +104,6 @@ public class UserDao {
             } else {
                 user = foundUsers.get(0);
             }
-
         } catch (HibernateException e) {
             logger.error(e.getMessage());
         }
@@ -138,14 +135,29 @@ public class UserDao {
         return userList;
     }
 
-    public void update(Long id, String updatedName) {
-        Session session = openSession();
-        User userToBeUpdated = findById(id);
-        Transaction transaction = session.beginTransaction();
-        userToBeUpdated.setName(updatedName);
-        session.update(userToBeUpdated);
-        transaction.commit();
-        session.close();
+    public User update(Long id, User userDetails) {
+        Transaction transaction = null;
+        User updatedUser = null;
+        try (Session session = openSession()) {
+            User userToBeUpdated = findById(id);
+
+            transaction = session.beginTransaction();
+
+            userToBeUpdated.setUsername(userDetails.getUsername());
+            userToBeUpdated.setName(userDetails.getName());
+            userToBeUpdated.setPassword(userDetails.getPassword());
+
+            session.update(userToBeUpdated);
+            transaction.commit();
+
+            updatedUser = findById(id);
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            logger.error(e.getMessage());
+        }
+        return updatedUser;
     }
 
     public void delete(Long id) {
