@@ -1,12 +1,15 @@
 package com.sda.eshop.ui;
 
+import com.sda.eshop.controller.ProductController;
 import com.sda.eshop.controller.UserController;
 import com.sda.eshop.dao.UserDao;
+import com.sda.eshop.model.Product;
 import com.sda.eshop.model.User;
 import com.sda.eshop.service.AuthenticationService;
 import com.sda.eshop.service.UserService;
 import com.sda.eshop.service.UserServiceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,6 +23,7 @@ public class Menu {
     public static final UserService userService = new UserServiceImpl(userDao);
     public static final AuthenticationService authService = new AuthenticationService(userService);
     public static final UserController userController = new UserController(userService, authService);
+    public static final ProductController productController = new ProductController();
     public static User loggedUser;
 
     private static Scanner in = new Scanner(System.in);
@@ -41,6 +45,10 @@ public class Menu {
                 System.out.println("Thanks for buying. Bye!");
                 break;
             }
+            case 1: {
+                showProducts();
+                break;
+            }
             case 3: {
                 showMyAccount();
                 break;
@@ -56,6 +64,35 @@ public class Menu {
             default: {
                 showMainMenu();
                 break;
+            }
+        }
+    }
+
+    private static void showProducts() {
+        // print all
+        List<Product> products = productController.findAll();
+        products.forEach(product -> System.out.println(product));
+
+        // select products by id
+        List<Product> productsToBuy = new ArrayList<>();
+
+        System.out.println("Select products by inserting the ID and press ENTER");
+        System.out.println("When ready to place order, type 0 to return");
+        // TODO: add option go cancel
+
+        // get id
+        Long option = -1L;
+        while (option != 0) {
+            option = in.nextLong();
+
+            // find by id
+            Product selectedProduct = productController.findById(option);
+            if (null != selectedProduct) {
+                // add to list
+                productsToBuy.add(selectedProduct);
+            } else {
+                System.out.println("The selected product does not exist. Try again!");
+                System.out.println(GO_BACK);
             }
         }
     }
