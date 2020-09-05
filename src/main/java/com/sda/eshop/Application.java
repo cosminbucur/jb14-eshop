@@ -20,6 +20,8 @@ public class Application {
         System.out.println("* Menu *");
         System.out.println("************");
 
+        // TODO: register new user
+        Menu.showLogin();
         Menu.showMainMenu();
     }
 
