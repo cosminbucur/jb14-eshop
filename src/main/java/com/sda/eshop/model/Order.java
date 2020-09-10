@@ -1,15 +1,6 @@
 package com.sda.eshop.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,9 +21,10 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(
-        mappedBy = "orders",
-        fetch = FetchType.LAZY)
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JoinColumn(name = "order_id")
     private List<Product> products = new ArrayList<>();
 
     public Order() {
@@ -40,15 +32,14 @@ public class Order {
 
     // need a user and a list of products
     public Order(User user, List<Product> products) {
-        // TODO: finish implementation
+        this.user = user;
+        this.products = products;
+
         // calculate total price
         // get price from all products
         this.totalPrice = products.stream()
-            .mapToDouble(product -> product.getPrice())
-            .sum();
-
-        this.user = user;
-        this.products = products;
+                .mapToDouble(product -> product.getPrice())
+                .sum();
     }
 
     public Long getId() {

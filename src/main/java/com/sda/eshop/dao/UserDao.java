@@ -123,7 +123,7 @@ public class UserDao {
             // not found
         }
 
-        return null != foundUser;
+        return foundUser != null;
     }
 
     public List<User> findAll() {

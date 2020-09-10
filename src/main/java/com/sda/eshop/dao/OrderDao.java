@@ -23,14 +23,18 @@ public class OrderDao {
      *
      * @param order order to be saved
      */
-    public void save(Order order) {
+    public Order save(Order order) {
         Session session = null;
         Transaction transaction = null;
+        Order result = null;
         try {
             session = openSession();
             transaction = session.beginTransaction();
             session.save(order);
             transaction.commit();
+
+            result = session.find(Order.class, order);
+
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -41,6 +45,7 @@ public class OrderDao {
                 session.close();
             }
         }
+        return result;
     }
 
     public List<Order> findAll() {

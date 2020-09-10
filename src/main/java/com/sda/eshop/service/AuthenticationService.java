@@ -15,7 +15,7 @@ public class AuthenticationService {
         // find user
         User loginUser = userService.findByUsername(username);
 
-        if (null == loginUser) {
+        if (loginUser == null) {
             System.out.println("username not found!");
         }
 

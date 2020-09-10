@@ -8,15 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Collections;
 import java.util.List;
 
-import static com.sda.eshop.utils.Constants.USERNAME_ALREADY_EXISTS;
-import static com.sda.eshop.utils.Constants.USER_DELETE;
-import static com.sda.eshop.utils.Constants.USER_FAIL_FIND_BY_ID;
-import static com.sda.eshop.utils.Constants.USER_FIND_ALL;
-import static com.sda.eshop.utils.Constants.USER_FIND_BY_ID;
-import static com.sda.eshop.utils.Constants.USER_FIND_BY_USERNAME;
-import static com.sda.eshop.utils.Constants.USER_SAVE;
-import static com.sda.eshop.utils.Constants.USER_UPDATE;
-import static com.sda.eshop.utils.Constants.USER_UPDATE_BY_ID;
+import static com.sda.eshop.utils.Constants.*;
 
 public class UserServiceImpl implements UserService {
 
@@ -65,9 +57,9 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean isValid(User user) {
-        return null != user.getName() &&
-            null != user.getUsername() &&
-            null != user.getPassword();
+        return user.getName() != null &&
+                user.getUsername() != null &&
+                user.getPassword() != null;
     }
 
     @Override
@@ -76,7 +68,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userDao.findById(id);
 
-        if (null == user) {
+        if (user == null) {
             log.info(USER_FAIL_FIND_BY_ID, id);
             return null;
         }
@@ -89,7 +81,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userDao.findByUsername(username);
 
-        if (null == user) {
+        if (user == null) {
             log.info(USER_FAIL_FIND_BY_ID, username);
             return null;
         }
@@ -99,13 +91,11 @@ public class UserServiceImpl implements UserService {
 
     public User update(Long id, User userDetails) {
         log.info(USER_UPDATE_BY_ID, id, userDetails);
-
         return userDao.update(id, userDetails);
     }
 
     public User update(User user) {
         log.info(USER_UPDATE, user);
-
         return userDao.update(user);
     }
 

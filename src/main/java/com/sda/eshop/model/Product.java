@@ -1,16 +1,7 @@
 package com.sda.eshop.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "Product")
 @Table(name = "products")
@@ -29,12 +20,6 @@ public class Product {
     private Boolean isInStock;
     @Column
     private Integer quantity;
-
-    @ManyToMany()
-    @JoinTable(name = "orders_products",
-        joinColumns = @JoinColumn(name = "product_id"),
-        inverseJoinColumns = @JoinColumn(name = "order_id"))
-    private List<Order> orders = new ArrayList<>();
 
     public Product() {
     }
@@ -86,22 +71,27 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id);
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "Product{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", price=" + price +
-            ", isInStock=" + isInStock +
-            ", quantity=" + quantity +
-            '}';
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", isInStock=" + isInStock +
+                ", quantity=" + quantity +
+                '}';
     }
 }

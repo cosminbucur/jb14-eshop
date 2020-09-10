@@ -13,8 +13,8 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    public void save(Order order) {
-
+    public Order save(Order order) {
+        return orderService.save(order);
     }
 
     public List<Order> findByUser(User loggedUser) {

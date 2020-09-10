@@ -135,16 +135,16 @@ public class IOUtils {
         List<User> result = new ArrayList<>();
 
         // check protections
-        if (null != fullNameList && !fullNameList.isEmpty()) {
+        if (fullNameList != null && !fullNameList.isEmpty()) {
             for (int i = 0; i < fullNameList.size(); i++) {
                 int randomNumber = (int) (Math.random() * ((max - min) + 1) + min);
 
                 User user = new User(
-                    fullNameList.get(i),
-                    (firstThreeLettersOfFirstName.get(i)
-                        + firstThreeLettersOfLastName.get(i)).toLowerCase()
-                        + randomNumber,
-                    "admin");
+                        fullNameList.get(i),
+                        (firstThreeLettersOfFirstName.get(i)
+                                + firstThreeLettersOfLastName.get(i)).toLowerCase()
+                                + randomNumber,
+                        "admin");
                 result.add(user);
             }
         }

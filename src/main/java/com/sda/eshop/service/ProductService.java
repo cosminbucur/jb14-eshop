@@ -8,9 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Collections;
 import java.util.List;
 
-import static com.sda.eshop.utils.Constants.PRODUCT_FAIL_FIND_BY_ID;
-import static com.sda.eshop.utils.Constants.PRODUCT_FIND_ALL;
-import static com.sda.eshop.utils.Constants.PRODUCT_FIND_BY_ID;
+import static com.sda.eshop.utils.Constants.*;
 
 public class ProductService {
 
@@ -40,7 +38,7 @@ public class ProductService {
 
         Product product = productDao.findById(id);
 
-        if (null == product) {
+        if (product == null) {
             log.info(PRODUCT_FAIL_FIND_BY_ID, id);
             return null;
         }

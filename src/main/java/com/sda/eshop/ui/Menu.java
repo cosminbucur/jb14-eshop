@@ -17,9 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.sda.eshop.utils.Constants.GO_BACK;
-import static com.sda.eshop.utils.Constants.INSERT_ID_TO_SEARCH;
-import static com.sda.eshop.utils.Constants.SELECT_AN_OPTION;
+import static com.sda.eshop.utils.Constants.*;
 
 public class Menu {
 
@@ -82,21 +80,26 @@ public class Menu {
         List<Product> products = productController.findAll();
         products.forEach(product -> System.out.println(product));
 
+        System.out.println("Select products by inserting the ID and press ENTER");
+        System.out.println("When ready to place order, type 0 to return");
+
+        // TODO: add option go cancel
+
         // select products by id
         List<Product> productsToBuy = new ArrayList<>();
 
-        System.out.println("Select products by inserting the ID and press ENTER");
-        System.out.println("When ready to place order, type 0 to return");
-        // TODO: add option go cancel
-
         // get id
-        Long option = -1L;
-        while (option != 0) {
+        long option;
+        while (true) {
             option = in.nextLong();
+
+            if (option == 0) {
+                break;
+            }
 
             // find by id
             Product selectedProduct = productController.findById(option);
-            if (null != selectedProduct) {
+            if (selectedProduct != null) {
                 // add to list
                 productsToBuy.add(selectedProduct);
             } else {
@@ -104,7 +107,6 @@ public class Menu {
                 System.out.println(GO_BACK);
             }
         }
-        System.out.println(productsToBuy);
 
         if (!productsToBuy.isEmpty()) {
             // create order
@@ -115,7 +117,7 @@ public class Menu {
             System.out.println("Order placed!");
 
             System.out.println("Placed orders: ");
-            System.out.println(newOrder);
+
             orderController.findByUser(loggedUser)
                 .forEach(order -> System.out.println());
         } else {
@@ -242,7 +244,7 @@ public class Menu {
         String username = in.next();
         User foundUser = userController.findByUsername(username);
 
-        if (null != foundUser) {
+        if (foundUser != null) {
             System.out.println(foundUser);
             showCrudUser();
         } else {
@@ -306,7 +308,7 @@ public class Menu {
             }
         }
 
-        if (null != updatedUser) {
+        if (updatedUser != null) {
             System.out.println("User successfully updated.");
             System.out.println(updatedUser);
         } else {
@@ -376,7 +378,7 @@ public class Menu {
         String password = in.next();
 
         // check if authenticated
-        Boolean isAuthenticated = userController.login(username, password);
+        boolean isAuthenticated = userController.login(username, password);
 
         if (isAuthenticated) {
             // find user in db
@@ -390,7 +392,7 @@ public class Menu {
 
         String answer = in.next();
 
-        if (answer.equals("y") && null != loggedUser) {
+        if (answer.equals("y") && loggedUser != null) {
             loggedUser = null;
             System.out.println("Logged out");
         } else if (answer.equals("n")) {
